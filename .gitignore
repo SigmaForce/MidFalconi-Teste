@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+build/
+dist/
+
+# Testing
+coverage/
+
+# Next.js
+.next/
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
