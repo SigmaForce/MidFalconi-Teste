@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useCreateProfile } from "@/hooks/profile/useCreateProfile";
 import {
   type ProfileFormValues,
   profileSchema,
@@ -9,19 +10,29 @@ import {
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export function ProfileForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
-    defaultValues: { nome: "" },
+    defaultValues: { name: "" },
   });
 
-  const onSubmit = (values: ProfileFormValues) => {
-    console.log(values);
+  const createProfile = useCreateProfile();
+
+  const onSubmit = async (values: ProfileFormValues) => {
+    try {
+      await createProfile.mutateAsync(values);
+      toast.success("Perfil criado com sucesso!");
+      reset();
+    } catch (error: any) {
+      toast.error(error?.message ?? "Erro ao criar o perfil");
+    }
   };
 
   return (
@@ -33,14 +44,19 @@ export function ProfileForm() {
         <label className="block text-sm font-medium text-zinc-700 mb-1">
           Nome
         </label>
-        <Input placeholder="Nome do perfil" {...register("nome")} />
-        {errors.nome && (
-          <p className="text-sm text-red-500">{errors.nome.message}</p>
+        <Input placeholder="Nome do perfil" {...register("name")} />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.name.message}</p>
         )}
       </div>
 
-      <Button variant="default" type="submit" className="w-full">
-        Salvar Perfil
+      <Button
+        variant="default"
+        type="submit"
+        className="w-full"
+        disabled={createProfile.isPending}
+      >
+        {createProfile.isPending ? "Salvando..." : "Salvar Perfil"}
       </Button>
     </form>
   );
