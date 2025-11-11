@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { type ComponentProps } from "react";
 
 const inputVariants = cva(
-  "p-3 w-full h-11 placeholder:text-placeholder border-[#3C393F] border bg-mauve-dark-950 rounded-sm focus:border-secondary outline-none text-foreground",
+  "p-3 w-full h-10 placeholder:text-placeholder border-[#3C393F] border rounded-sm focus:border-secondary outline-none text-foreground",
   {
     variants: {
       hasIcon: {
@@ -29,20 +29,12 @@ const containerVariants = cva("flex flex-col gap-2 justify-baseline w-full", {
 interface InputProps
   extends ComponentProps<"input">,
     VariantProps<typeof containerVariants> {
-  label?: string;
   icon?: React.ReactNode;
 }
 
-export function Input({
-  label,
-  className,
-  variant,
-  icon,
-  ...props
-}: InputProps) {
+export function Input({ className, variant, icon, ...props }: InputProps) {
   return (
     <div className={containerVariants({ variant })}>
-      {label && <label className="font-bold text-xs">{label}</label>}
       <div className="relative w-full">
         <input
           className={inputVariants({ className, hasIcon: !!icon })}
