@@ -1,7 +1,6 @@
-import { UserIcon } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
+import Link from "next/link";
+import { LoginForm } from "./register/_components/login-form";
 
 export default function Home() {
   return (
@@ -11,14 +10,11 @@ export default function Home() {
         <h1 className="text-4xl font-bold mb-4">Acesse sua conta</h1>
       </div>
       <div className="flex flex-col gap-4">
-        <Input icon={<UserIcon size={20} />} placeholder="Informe seu ID" />
-        <Button variant="default">Entrar</Button>
-        <span>
+        <LoginForm />
+        <Link href="/register" className="text-sm text-zinc-600 cursor-pointer">
           Não possui uma conta?{" "}
-          <a href="#" className="text-primary">
-            Registre-se
-          </a>
-        </span>
+          <span className="text-primary">Registre-se</span>
+        </Link>
       </div>
     </div>
   );
