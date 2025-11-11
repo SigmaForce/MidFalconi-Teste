@@ -15,8 +15,8 @@ export default function Register() {
       </div>
       <Tabs defaultValue="users" className="w-full">
         <TabsList className="w-full gap-2">
-          <TabsTrigger value="users">Users</TabsTrigger>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
+          <TabsTrigger value="users">Usuario</TabsTrigger>
+          <TabsTrigger value="profile">Perfil</TabsTrigger>
         </TabsList>
         <TabsContent value="users">
           <UserForm />
