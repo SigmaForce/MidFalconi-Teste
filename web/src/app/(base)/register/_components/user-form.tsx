@@ -64,7 +64,7 @@ export function UserForm({ onSuccess }: UserFormProps) {
       }
       reset();
     } catch (error: any) {
-      toast.error("Erro ao criar o usuário");
+      toast.error(error.response.data.message);
     }
   };
 
