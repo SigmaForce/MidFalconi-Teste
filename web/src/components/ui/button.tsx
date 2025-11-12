@@ -3,12 +3,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps } from "react";
 
 const ButtonVariants = cva(
-  "flex w-full text-white cursor-pointer items-center rounded-md h-11 justify-center transition-colors duration-300",
+  "flex w-full text-white cursor-pointer items-center rounded-md h-11 justify-center transition-colors duration-300 px-4",
   {
     variants: {
       variant: {
         default:
           "bg-primary hover:bg-primary/80 active:bg-primary/80 disabled:bg-zinc-300 disabled:cursor-auto",
+        dark: "border bg-foreground shadow-xs hover:bg-foreground/90 ",
       },
       defaultVariants: {
         variant: "default",

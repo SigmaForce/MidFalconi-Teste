@@ -12,7 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export function ProfileForm() {
+interface ProfileFormProps {
+  onSuccess?: () => void;
+}
+
+export function ProfileForm({ onSuccess }: ProfileFormProps) {
   const {
     register,
     handleSubmit,
@@ -30,6 +34,7 @@ export function ProfileForm() {
       await createProfile.mutateAsync(values);
       toast.success("Perfil criado com sucesso!");
       reset();
+      onSuccess?.();
     } catch (error: any) {
       toast.error(error?.message ?? "Erro ao criar o perfil");
     }
@@ -51,7 +56,7 @@ export function ProfileForm() {
       </div>
 
       <Button
-        variant="default"
+        variant="dark"
         type="submit"
         className="w-full"
         disabled={createProfile.isPending}

@@ -57,7 +57,7 @@ export function LoginForm() {
       </div>
 
       <Button
-        variant="default"
+        variant="dark"
         type="submit"
         className="w-full"
         disabled={isLoading}

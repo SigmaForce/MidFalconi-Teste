@@ -19,7 +19,11 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export function UserForm() {
+interface UserFormProps {
+  onSuccess?: () => void;
+}
+
+export function UserForm({ onSuccess }: UserFormProps) {
   const router = useRouter();
   const {
     register,
@@ -43,19 +47,21 @@ export function UserForm() {
   const onSubmit = async (values: UserFormValues) => {
     try {
       const user = await createUser.mutateAsync(values);
-
-      toast.success("Usuário criado com sucesso!", {
-        description: `ID: ${user.id}`,
-        action: {
-          label: "Copiar ID",
-          onClick: () => {
-            navigator.clipboard.writeText(user.id);
-            toast.info("ID copiado para a área de transferência!");
-            router.push(`/`);
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        toast.success("Usuário criado com sucesso!", {
+          description: `ID: ${user.id}`,
+          action: {
+            label: "Copiar ID",
+            onClick: () => {
+              navigator.clipboard.writeText(user.id);
+              toast.info("ID copiado para a área de transferência!");
+              router.push(`/`);
+            },
           },
-        },
-      });
-
+        });
+      }
       reset();
     } catch (error: any) {
       toast.error("Erro ao criar o usuário");
@@ -133,7 +139,7 @@ export function UserForm() {
 
       <Button
         type="submit"
-        variant="default"
+        variant="dark"
         className="w-full"
         disabled={createUser.isPending}
       >
